@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://doemfo6j35fho"]
+
+[ext_resource type="Script" uid="uid://d3hqalari8phb" path="res://ProjetSolo1/Scripts/Planet.gd" id="1_kymnv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kymnv"]
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_atnbh"]
+material = SubResource("StandardMaterial3D_kymnv")
+radius = 0.25
+height = 0.5
+
+[node name="Planet" type="Node3D" node_paths=PackedStringArray("mesh")]
+script = ExtResource("1_kymnv")
+mesh = NodePath("MeshPlanet")
+
+[node name="MeshPlanet" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+mesh = SubResource("SphereMesh_atnbh")

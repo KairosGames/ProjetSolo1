@@ -1,0 +1,91 @@
+[gd_scene load_steps=13 format=3 uid="uid://dye26yjlxnstd"]
+
+[ext_resource type="PackedScene" uid="uid://dfe20pc0pgw1o" path="res://ProjetSolo1/Prefabs/Comet.tscn" id="1_glv6t"]
+[ext_resource type="PackedScene" uid="uid://doemfo6j35fho" path="res://ProjetSolo1/Prefabs/Planet.tscn" id="1_ijiyu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_glv6t"]
+albedo_color = Color(0.013002372, 1.380751e-06, 0.12833956, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_33xkk"]
+material = SubResource("StandardMaterial3D_glv6t")
+size = Vector3(100, 0.05, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vdhyp"]
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_0went"]
+material = SubResource("StandardMaterial3D_vdhyp")
+radius = 0.25
+height = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_33xkk"]
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_vdhyp"]
+material = SubResource("StandardMaterial3D_33xkk")
+radius = 0.25
+height = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0went"]
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_unqm5"]
+material = SubResource("StandardMaterial3D_0went")
+radius = 0.25
+height = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4wq30"]
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_vpe8a"]
+material = SubResource("StandardMaterial3D_4wq30")
+radius = 0.25
+height = 0.5
+
+[node name="MainScene" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 17.462202, 0)
+
+[node name="Ground" type="Node3D" parent="."]
+
+[node name="GroundMesh" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.025, 0)
+mesh = SubResource("BoxMesh_33xkk")
+
+[node name="Comet" parent="." node_paths=PackedStringArray("planets", "first_target") instance=ExtResource("1_glv6t")]
+planets = [NodePath("../Planets/Planet2"), NodePath("../Planets/Planet"), NodePath("../Planets/Planet3"), NodePath("../Planets/Planet4")]
+first_target = NodePath("../Planets/Planet")
+
+[node name="Planets" type="Node3D" parent="."]
+
+[node name="Planet" parent="Planets" instance=ExtResource("1_ijiyu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.415326, 0, -4)
+
+[node name="MeshPlanet" parent="Planets/Planet" index="0"]
+mesh = SubResource("SphereMesh_0went")
+
+[node name="Planet2" parent="Planets" instance=ExtResource("1_ijiyu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2647223, 0, -8)
+
+[node name="MeshPlanet" parent="Planets/Planet2" index="0"]
+mesh = SubResource("SphereMesh_vdhyp")
+
+[node name="Planet3" parent="Planets" instance=ExtResource("1_ijiyu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.877416, 0, 4)
+
+[node name="MeshPlanet" parent="Planets/Planet3" index="0"]
+mesh = SubResource("SphereMesh_unqm5")
+
+[node name="Planet4" parent="Planets" instance=ExtResource("1_ijiyu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.656994, 0, 8)
+
+[node name="MeshPlanet" parent="Planets/Planet4" index="0"]
+mesh = SubResource("SphereMesh_vpe8a")
+
+[editable path="Planets/Planet"]
+[editable path="Planets/Planet2"]
+[editable path="Planets/Planet3"]
+[editable path="Planets/Planet4"]

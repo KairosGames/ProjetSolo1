@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dfe20pc0pgw1o"]
+
+[ext_resource type="Script" uid="uid://dyb6wwimw6ufy" path="res://ProjetSolo1/Scripts/Comet.gd" id="1_cu8js"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vdhyp"]
+albedo_color = Color(0.8770312, 0.8319625, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_0went"]
+material = SubResource("StandardMaterial3D_vdhyp")
+radius = 0.125
+height = 0.25
+
+[node name="Comet" type="Node3D"]
+script = ExtResource("1_cu8js")
+
+[node name="MeshComet" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125, 0)
+mesh = SubResource("SphereMesh_0went")
