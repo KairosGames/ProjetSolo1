@@ -1,7 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://dye26yjlxnstd"]
+[gd_scene load_steps=15 format=3 uid="uid://dye26yjlxnstd"]
 
+[ext_resource type="Script" uid="uid://bwll41k254gtn" path="res://ProjetSolo1/Scenes/CometCamera.gd" id="1_33xkk"]
 [ext_resource type="PackedScene" uid="uid://dfe20pc0pgw1o" path="res://ProjetSolo1/Prefabs/Comet.tscn" id="1_glv6t"]
 [ext_resource type="PackedScene" uid="uid://doemfo6j35fho" path="res://ProjetSolo1/Prefabs/Planet.tscn" id="1_ijiyu"]
+[ext_resource type="Script" uid="uid://bipi83olqg5ls" path="res://ProjetSolo1/Scenes/UIManager.gd" id="1_vdhyp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_glv6t"]
 albedo_color = Color(0.013002372, 1.380751e-06, 0.12833956, 1)
@@ -44,10 +46,107 @@ height = 0.5
 
 [node name="MainScene" type="Node3D"]
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("comet", "comet_camera", "is_centered", "game_speed")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1151.0
+offset_bottom = 649.0
+script = ExtResource("1_vdhyp")
+comet = NodePath("../../Comet")
+comet_camera = NodePath("../../CometCamera")
+is_centered = NodePath("CheckBox")
+game_speed = NodePath("GameSpeed")
+speeds = Array[float]([0.25, 0.5, 1.0, 2.0, 4.0, 8.0])
+speeds_txt = Array[String](["0.25", "0.5", "1.0", "2.0", "4.0", "8.0"])
+
+[node name="Panel" type="Panel" parent="CanvasLayer/UI"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 14.0
+offset_right = 219.0
+offset_bottom = 121.0
+
+[node name="CenterCameraTxt" type="Label" parent="CanvasLayer/UI"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 21.0
+offset_right = 157.0
+offset_bottom = 44.0
+text = "Center camera : "
+
+[node name="CheckBox" type="CheckBox" parent="CanvasLayer/UI"]
+layout_mode = 0
+offset_left = 158.0
+offset_top = 22.0
+offset_right = 182.0
+offset_bottom = 46.0
+button_pressed = true
+
+[node name="GameSpeedTxt" type="Label" parent="CanvasLayer/UI"]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 51.0
+offset_right = 139.0
+offset_bottom = 79.0
+text = "Game speed :"
+
+[node name="LeftArrow" type="Label" parent="CanvasLayer/UI"]
+layout_mode = 0
+offset_left = 137.0
+offset_top = 51.0
+offset_right = 158.0
+offset_bottom = 74.0
+text = "◀"
+
+[node name="GameSpeed" type="Label" parent="CanvasLayer/UI"]
+layout_mode = 0
+offset_left = 154.0
+offset_top = 52.0
+offset_right = 190.0
+offset_bottom = 75.0
+text = "1.0"
+horizontal_alignment = 1
+
+[node name="RightArrow" type="Label" parent="CanvasLayer/UI"]
+layout_mode = 0
+offset_left = 193.0
+offset_top = 52.0
+offset_right = 212.0
+offset_bottom = 75.0
+text = "▶"
+
+[node name="UpArrow" type="Label" parent="CanvasLayer/UI"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 73.0
+offset_right = 70.0
+offset_bottom = 96.0
+text = "▲"
+
+[node name="DownArrow" type="Label" parent="CanvasLayer/UI"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 92.0
+offset_right = 70.0
+offset_bottom = 115.0
+text = "▼"
+
+[node name="SwitchTargerTxt" type="Label" parent="CanvasLayer/UI"]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 83.0
+offset_right = 156.0
+offset_bottom = 106.0
+text = "Switch target"
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="CometCamera" type="Camera3D" parent="." node_paths=PackedStringArray("comet")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 17.462202, 0)
+script = ExtResource("1_33xkk")
+comet = NodePath("../Comet")
 
 [node name="Ground" type="Node3D" parent="."]
 
@@ -84,6 +183,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.656994, 0, 8)
 
 [node name="MeshPlanet" parent="Planets/Planet4" index="0"]
 mesh = SubResource("SphereMesh_vpe8a")
+
+[connection signal="toggled" from="CanvasLayer/UI/CheckBox" to="CanvasLayer/UI" method="_on_check_box_toggled"]
 
 [editable path="Planets/Planet"]
 [editable path="Planets/Planet2"]
